@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import Login from "./components/Login";
-import Register from "./components/Register";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -10,6 +8,7 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      console.log("Auth state changed: ", currentUser);
     });
 
     return () => unsubscribe();
@@ -20,13 +19,10 @@ function App() {
       {user ? (
         <>
           <h2>Welcome, {user.email}</h2>
-          <button onClick={() => auth.signOut()}>Logout</button>
+          {}
         </>
       ) : (
-        <>
-          <Register />
-          <Login />
-        </>
+        <h2>Please login to access the system</h2>
       )}
     </div>
   );
